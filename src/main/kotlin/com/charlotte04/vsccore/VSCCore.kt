@@ -9,12 +9,12 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class VSCCore: JavaPlugin() {
     override fun onEnable() {
-
         consoleMes("Enabled",GREEN)
+        regEvent(PlayerJoinListener,this)
     }
 
 
-    private fun consoleMes(string: String, color: ChatColor){
+    open fun consoleMes(string: String, color: ChatColor){
         this.server.consoleSender.sendMessage("[VSC_Core]$color$string")
     }
 
