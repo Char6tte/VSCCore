@@ -1,23 +1,28 @@
 package com.charlotte04.vsccore
 
-import net.md_5.bungee.api.ChatColor
-import net.md_5.bungee.api.ChatColor.*
+import com.charlotte04.vsccore.listeners.PlayerEventListener
+import com.charlotte04.vsccore.Massages.consoleMes
+import com.charlotte04.vsccore.commands.VSCCommand
+import org.bukkit.ChatColor.*
 import org.bukkit.command.CommandExecutor
 import org.bukkit.event.Listener
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 
-class VSCCore: JavaPlugin() {
+class VSCCore: JavaPlugin(), Listener {
+
+    companion object {
+        lateinit var plugin: JavaPlugin
+    }
+
     override fun onEnable() {
+        plugin = this
         consoleMes("Enabled",GREEN)
-        regEvent(PlayerJoinListener,this)
+        regEvent(PlayerEventListener,this)
+        regCommand("vsc", VSCCommand)
     }
 
-
-    open fun consoleMes(string: String, color: ChatColor){
-        this.server.consoleSender.sendMessage("[VSC_Core]$color$string")
-    }
-
+    @Suppress("SameParameterValue")
     private fun regCommand(name: String, executor: CommandExecutor) {
         getCommand(name)?.run {
             setExecutor(executor)

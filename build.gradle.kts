@@ -35,15 +35,12 @@ dependencies {
     //implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // Spigot API
-    compileOnly("org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT")
-
     // PaperMC API
     compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 }
 
 application{
-    mainClass.set("com.charlotte04.vsccore.VSCCore")
+    mainClass.set("com.charlotte04.vsccore.VSCCore.kt")
 }
 
 tasks.test {
