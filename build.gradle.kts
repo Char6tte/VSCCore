@@ -37,6 +37,10 @@ dependencies {
 
     // PaperMC API
     compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation("mysql:mysql-connector-java:8.0.30")
+
 }
 
 application{

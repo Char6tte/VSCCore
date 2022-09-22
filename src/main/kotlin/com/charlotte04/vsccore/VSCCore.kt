@@ -33,4 +33,5 @@ class VSCCore: JavaPlugin(), Listener {
     private fun regEvent(executor: Listener, plugin : Plugin){
         server.pluginManager.registerEvents(executor, plugin)
     }
+
 }

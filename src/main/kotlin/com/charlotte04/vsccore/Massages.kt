@@ -9,4 +9,5 @@ object Massages {
         plugin.server.consoleSender.sendMessage("[VSC_Core]$color$string")
     }
 
+
 }
