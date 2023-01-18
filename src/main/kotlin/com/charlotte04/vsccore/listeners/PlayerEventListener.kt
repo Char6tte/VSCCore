@@ -6,6 +6,7 @@ import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.lifetime_login
 import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.local_login
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextReplacementConfig
+import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.NamedTextColor.*
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.ChatColor.GREEN
@@ -19,8 +20,8 @@ import org.bukkit.event.player.PlayerJoinEvent
 object PlayerEventListener : Listener {
 
     object Msg {
-        val local_login = Component.text("{name} さんがログインしました！").color(TextColor.color(YELLOW))
-        val first_login = Component.text("082です！これからよろしくね！").color(TextColor.color(AQUA))
+        val local_login = Component.text("{name} さんがログインしました！").color(TextColor.color(NamedTextColor.GREEN))
+        val first_login = Component.text("はじめまして！これからよろしくね！").color(TextColor.color(AQUA))
         val lifetime_login = Component.text("{n}日目のログインです！ログイン大ボーナスまであと{nd}日").color(TextColor.color(AQUA))
     }
 
@@ -33,7 +34,8 @@ object PlayerEventListener : Listener {
         val player = e.player
         val name= e.player.name
 
-        e.joinMessage(local_login.replaceText(sys_replace("{name}",name)))
+        e.joinMessage(local_login.replaceText(sys_replace("{name}",name)).color(TextColor.color(AQUA)))
+
 
         if(!player.hasPlayedBefore()){
             player.sendMessage(first_login)

@@ -27,19 +27,21 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.22")
     // Align versions of all Kotlin components
     //implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
     // Kotlin
     //implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.22")
 
     // PaperMC API
     compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation("mysql:mysql-connector-java:8.0.30")
+    //ORM hikariCP
+    implementation("com.zaxxer:HikariCP:5.0.1")
 
 }
 
