@@ -1,9 +1,16 @@
 package com.charlotte04.vsccore.listeners
 
-import com.charlotte04.vsccore.Massages.consoleMes
+import com.charlotte04.vsccore.util.Massages.consoleMes
+import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.first_login
+import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.lifetime_login
+import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.local_login
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextReplacementConfig
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.NamedTextColor.*
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.ChatColor.GREEN
+import org.bukkit.Sound
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
@@ -12,25 +19,37 @@ import org.bukkit.event.player.PlayerJoinEvent
 @Suppress("KotlinConstantConditions")
 object PlayerEventListener : Listener {
 
+    object Msg {
+        val local_login = Component.text("{name} さんがログインしました！").color(TextColor.color(NamedTextColor.GREEN))
+        val first_login = Component.text("はじめまして！これからよろしくね！").color(TextColor.color(AQUA))
+        val lifetime_login = Component.text("{n}日目のログインです！ログイン大ボーナスまであと{nd}日").color(TextColor.color(AQUA))
+    }
+
+    fun sys_replace(match:String,replace:String): TextReplacementConfig {
+        return TextReplacementConfig.builder().matchLiteral(match).replacement(replace).build()
+    }
+
     @EventHandler
     fun onPlayerLoginMessage(e: PlayerJoinEvent){
         val player = e.player
         val name= e.player.name
 
-        e.joinMessage(Component.text("$name さんがログインしました！").color(TextColor.color(255 , 215, 0)))
+        e.joinMessage(local_login.replaceText(sys_replace("{name}",name)).color(TextColor.color(AQUA)))
+
 
         if(!player.hasPlayedBefore()){
-            player.sendMessage(Component.text("082です！これからよろしくね！").color(TextColor.color(0, 255, 215)))
+            player.sendMessage(first_login)
         }else{
-            player.sendMessage(Component.text("n日目のログインです！ログイン大ボーナスまであとn日").color(TextColor.color(0, 255, 215)))
+            player.sendMessage(lifetime_login.replaceText(sys_replace("{n}","")).replaceText(sys_replace("{nd}","")))
         }
 
+        player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
         player.sendMessage(Component.text())
     }
 
     @EventHandler
     fun onPlayerPreLogin(e: AsyncPlayerPreLoginEvent) {
-        val maxTry = 3
+        val maxTry = 2
         val errorMessage = "ユーザー情報取得できなかったからキックしたよ"
 
         for (tryCount in 1 until maxTry) {

@@ -1,0 +1,35 @@
+mysql:
+  type: "MariaDB"
+  host: ""
+  user: ""
+  password: ""
+
+vsc_command:
+  text1: ""
+  text2: ""
+  text3: ""
+
+board_setting:
+  Hours:
+    Format: ""
+  Boards_Toggle_Message:
+    ON: ""
+    OFF: ""
+
+#
+#色の書き方：
+#${AQUA}
+#
+
+main_board:
+  ui_Name: "1"
+  ui_Title: "ちゃるくら！"
+  content:
+    title:
+      - "== ちゃるくら！ =="
+      - ""
+    message:
+      - "a"
+      - "a"
+      - "a"
+
