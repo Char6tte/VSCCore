@@ -1,6 +1,6 @@
 package com.charlotte04.vsccore.listeners
 
-import com.charlotte04.vsccore.Massages.consoleMes
+import com.charlotte04.vsccore.util.Massages.consoleMes
 import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.first_login
 import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.lifetime_login
 import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.local_login

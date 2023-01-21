@@ -1,6 +1,6 @@
 package com.charlotte04.vsccore
 
-import com.charlotte04.vsccore.Massages.consoleMes
+import com.charlotte04.vsccore.util.Massages.consoleMes
 import com.charlotte04.vsccore.commands.VSCCommand
 import com.charlotte04.vsccore.listeners.PlayerEventListener
 import org.bukkit.Bukkit
@@ -34,9 +34,10 @@ class VSCCore: JavaPlugin(), Listener {
         //　ここから初期化処理を始める
         plugin = this
         //デフォルトコンフィグを保存する
-        //saveDefaultConfig()
+        saveDefaultConfig()
 
-        //
+        //DBへ接続
+
 
         //イベントリスナー継承
         regEvent(PlayerEventListener,this)

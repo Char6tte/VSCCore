@@ -1,5 +1,6 @@
 package com.charlotte04.vsccore.commands
 
+import com.charlotte04.vsccore.VSCCore
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor.*
@@ -13,10 +14,13 @@ import org.bukkit.scoreboard.Score
 
 
 object VSCCommand : CommandExecutor {
+    //コンフィグ継承
+    private val config = VSCCore.plugin.config
 
+    //チュートリアルの通りに作ってみただけ。
     private fun setScoreBoard(player: Player) {
         val board = Bukkit.getScoreboardManager().newScoreboard
-        val obj = board.registerNewObjective("UI_Sidebar" , DUMMY, Component.text("${AQUA}=== ちゃるくら！ ==="))
+        val obj = board.registerNewObjective(config.get("vsc_command").toString(), DUMMY, Component.text("${AQUA}=== ちゃるくら！ ==="))
         obj.displaySlot = DisplaySlot.SIDEBAR
 
         val onlineName: Score = obj.getScore("")
@@ -36,12 +40,16 @@ object VSCCommand : CommandExecutor {
 
         player.scoreboard = board
     }
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         sender.sendMessage("VSCCore")
         val player:Player = sender as Player
 
 
         setScoreBoard(player)
+        val path = VSCCore.plugin.config.getConfigurationSection("main_board")?.currentPath
+
+        sender.sendMessage(path.toString())
 
 
         return true

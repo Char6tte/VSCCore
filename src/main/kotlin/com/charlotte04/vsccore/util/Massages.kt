@@ -1,4 +1,4 @@
-package com.charlotte04.vsccore
+package com.charlotte04.vsccore.util
 
 import com.charlotte04.vsccore.VSCCore.Companion.plugin
 import org.bukkit.ChatColor
