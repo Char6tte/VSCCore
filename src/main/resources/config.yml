@@ -1,8 +1,9 @@
-mysql:
+Database:
   type: "MariaDB"
-  host: ""
-  user: ""
-  password: ""
+  host: "localhost:3306"
+  dbname: "charl_craft"
+  user: "user"
+  password: "password"
 
 vsc_command:
   text1: ""

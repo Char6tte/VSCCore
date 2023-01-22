@@ -36,15 +36,17 @@ object PlayerEventListener : Listener {
 
         e.joinMessage(local_login.replaceText(sys_replace("{name}",name)).color(TextColor.color(AQUA)))
 
-
+        /*
         if(!player.hasPlayedBefore()){
             player.sendMessage(first_login)
         }else{
             player.sendMessage(lifetime_login.replaceText(sys_replace("{n}","")).replaceText(sys_replace("{nd}","")))
         }
 
+         */
+
         player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
-        player.sendMessage(Component.text())
+       // player.sendMessage(Component.text())
     }
 
     @EventHandler
