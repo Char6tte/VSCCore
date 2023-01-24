@@ -42,15 +42,17 @@ object VSCCommand : CommandExecutor {
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
-        sender.sendMessage("VSCCore")
         val player:Player = sender as Player
 
-
         setScoreBoard(player)
+        sender.sendMessage("VSCCore")
+
+        /*
+
         val path = VSCCore.plugin.config.getConfigurationSection("main_board")?.currentPath
 
         sender.sendMessage(path.toString())
-
+         */
 
         return true
     }
