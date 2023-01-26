@@ -48,7 +48,6 @@ object VSCCommand : CommandExecutor {
         sender.sendMessage("VSCCore")
 
         /*
-
         val path = VSCCore.plugin.config.getConfigurationSection("main_board")?.currentPath
 
         sender.sendMessage(path.toString())

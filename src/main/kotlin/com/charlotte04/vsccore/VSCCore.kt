@@ -1,6 +1,7 @@
 package com.charlotte04.vsccore
 
 import com.charlotte04.vsccore.commands.VSCCommand
+import com.charlotte04.vsccore.commands.VSCMoneyCommand
 import com.charlotte04.vsccore.listeners.PlayerEventListener
 import com.charlotte04.vsccore.util.Massages.consoleMes
 import com.zaxxer.hikari.HikariConfig
@@ -63,6 +64,7 @@ class VSCCore: JavaPlugin(), Listener {
         regEvent(PlayerEventListener,this)
         //コマンドリスナー継承
         regCommand("vsc", VSCCommand)
+        regCommand("charl",VSCMoneyCommand)
 
         //　ここまで
         hasBeenLoadedAlready = true

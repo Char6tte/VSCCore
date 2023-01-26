@@ -17,6 +17,16 @@ board_setting:
     ON: ""
     OFF: ""
 
+items:
+  1:
+    itemID: ""
+    name: ""
+    Lore:
+      - ""
+      - ""
+    CustomModelData: 0
+
+
 #
 #色の書き方：
 #${AQUA}
