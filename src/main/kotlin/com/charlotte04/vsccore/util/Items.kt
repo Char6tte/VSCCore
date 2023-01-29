@@ -4,8 +4,13 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor.*
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.ItemMeta
+
+
+
 
 object Items  {
+
 
     fun money(type: String): Any {
         // お金用アイテム
@@ -14,19 +19,27 @@ object Items  {
         when (type) {
             "coin" -> {
                 val coin = ItemStack(Material.POISONOUS_POTATO)
-                coin.itemMeta.setCustomModelData(1)
-                coin.itemMeta.displayName(Component.text("${GOLD}100チャコイン"))
+                val coinMeta: ItemMeta = coin.itemMeta
+                coinMeta.setCustomModelData(1)
+                coinMeta.displayName(Component.text("100チャコイン").color(GOLD))
+                coin.itemMeta = coinMeta
                 return coin
             }
             "bill" -> {
                 val bill = ItemStack(Material.POISONOUS_POTATO)
-                bill.itemMeta.setCustomModelData(2)
-                bill.itemMeta.displayName(Component.text("${YELLOW}1000チャ紙幣"))
+                val billMeta: ItemMeta = bill.itemMeta
+                billMeta.setCustomModelData(2)
+                billMeta.displayName(Component.text("1000チャ紙幣").color(YELLOW))
+                bill.itemMeta = billMeta
                 return bill
             }
         }
 
         return false
+    }
+
+    fun getConfigItem(){
+
     }
 
 

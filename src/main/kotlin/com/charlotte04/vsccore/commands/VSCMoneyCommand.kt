@@ -1,6 +1,9 @@
 package com.charlotte04.vsccore.commands
 
+import com.charlotte04.vsccore.VSCCore
 import com.charlotte04.vsccore.util.Items.money
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -15,14 +18,23 @@ object VSCMoneyCommand : CommandExecutor {
         if (args?.size != 0){
             when(args?.get(0)){
                "item" -> {
+
                    val item = money(args[1]) as ItemStack
-                   val itemName = item.displayName()
-
+                   var itemName = Component.text(item.type.name)
+                   if(item.itemMeta.hasDisplayName()) {
+                       itemName = item.itemMeta.displayName() as TextComponent
+                   }
                    player.inventory.addItem(item)
-                   sender.sendMessage("$itemName ${GREEN}を取得しました!")
+                   sender.sendMessage(itemName.append(Component.text("を取得しました！").color(GREEN)))
                }
-               "" -> {
+               "set" -> {
+                   var dep = VSCCore.jecon.repository.get(player.uniqueId)
+                   sender.sendMessage(player.uniqueId.toString() + " " +  dep.toString())
 
+                   VSCCore.jecon.repository.deposit(player.uniqueId,100.00)
+
+                   dep = VSCCore.jecon.repository.get(player.uniqueId)
+                   sender.sendMessage(dep.toString())
                }
             }
         }else {

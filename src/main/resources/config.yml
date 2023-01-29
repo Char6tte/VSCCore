@@ -18,13 +18,20 @@ board_setting:
     OFF: ""
 
 items:
-  1:
-    itemID: ""
-    name: ""
-    Lore:
-      - ""
-      - ""
-    CustomModelData: 0
+  id:
+    POISONOUS_POTATO:
+      1:
+        name: "100チャコイン"
+        Lore:
+          - "右クリックで100チャゲットできる。"
+          - ""
+        Money: 100.0
+      2:
+        name: "1000チャ紙幣"
+        Lore:
+          - "右クリックで1000チャゲットできる。"
+          - ""
+        Money: 1000.0
 
 
 #

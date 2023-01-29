@@ -15,7 +15,7 @@ import org.bukkit.scoreboard.Score
 
 object VSCCommand : CommandExecutor {
     //コンフィグ継承
-    private val config = VSCCore.plugin.config
+    val config = VSCCore.plugin.config
 
     //チュートリアルの通りに作ってみただけ。
     private fun setScoreBoard(player: Player) {

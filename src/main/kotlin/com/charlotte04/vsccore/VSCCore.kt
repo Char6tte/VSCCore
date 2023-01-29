@@ -6,12 +6,14 @@ import com.charlotte04.vsccore.listeners.PlayerEventListener
 import com.charlotte04.vsccore.util.Massages.consoleMes
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import jp.jyn.jecon.Jecon
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor.*
 import org.bukkit.command.CommandExecutor
 import org.bukkit.event.Listener
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.UUID
 
 
 class VSCCore: JavaPlugin(), Listener {
@@ -24,6 +26,7 @@ class VSCCore: JavaPlugin(), Listener {
     private var hasBeenLoadedAlready = false
     companion object {
         lateinit var plugin: JavaPlugin
+        lateinit var jecon: Jecon
     }
 
     override fun onEnable() {
@@ -65,6 +68,16 @@ class VSCCore: JavaPlugin(), Listener {
         //コマンドリスナー継承
         regCommand("vsc", VSCCommand)
         regCommand("charl",VSCMoneyCommand)
+
+
+        val plugin = Bukkit.getPluginManager().getPlugin("Jecon")
+        if (plugin == null || !plugin.isEnabled) {
+            // not available
+            logger.warning("Jecon is not available.")
+        }else{
+            jecon = plugin as Jecon
+        }
+
 
         //　ここまで
         hasBeenLoadedAlready = true
