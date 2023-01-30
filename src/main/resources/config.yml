@@ -17,6 +17,9 @@ board_setting:
     ON: ""
     OFF: ""
 
+custom_item_massage:
+  id_NotFound: ""
+  CustomModelData_NotFound: ""
 items:
   id:
     POISONOUS_POTATO:

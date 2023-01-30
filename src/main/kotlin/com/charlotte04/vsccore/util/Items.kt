@@ -11,7 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta
 
 object Items  {
 
-
     fun money(type: String): Any {
         // お金用アイテム
         // ItemStack(Material.POISONOUS_POTATO)
@@ -36,10 +35,6 @@ object Items  {
         }
 
         return false
-    }
-
-    fun getConfigItem(){
-
     }
 
 
