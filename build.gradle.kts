@@ -9,9 +9,9 @@ plugins {
 }
 
 group = "com.charlotte04"
-version = "1.0-SNAPSHOT"
+version = ""
 java.sourceCompatibility=JavaVersion.VERSION_17
-val mcVersion = "1.19.2"
+val mcVersion = "1.19.3"
 
 repositories {
     mavenCentral()
@@ -23,6 +23,12 @@ repositories {
     }
     maven{
         url = URI("https://oss.sonatype.org/content/groups/public/")
+    }
+    maven{
+        url = URI("https://jitpack.io")
+    }
+    maven{
+        url = URI("https://himajyun.github.io/mvn-repo/")
     }
 }
 
@@ -38,11 +44,14 @@ dependencies {
     // PaperMC API
     compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 
+    //Vault
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    compileOnly("jp.jyn:Jecon:2.2.1")
+
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation("mysql:mysql-connector-java:8.0.30")
     //ORM hikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
-
 }
 
 application{

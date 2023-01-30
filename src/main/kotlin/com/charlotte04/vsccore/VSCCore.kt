@@ -1,20 +1,32 @@
 package com.charlotte04.vsccore
 
-import com.charlotte04.vsccore.util.Massages.consoleMes
 import com.charlotte04.vsccore.commands.VSCCommand
+import com.charlotte04.vsccore.commands.VSCMoneyCommand
 import com.charlotte04.vsccore.listeners.PlayerEventListener
+import com.charlotte04.vsccore.util.Massages.consoleMes
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
+import jp.jyn.jecon.Jecon
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor.*
 import org.bukkit.command.CommandExecutor
 import org.bukkit.event.Listener
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.UUID
 
 
 class VSCCore: JavaPlugin(), Listener {
+    private var hikari: HikariDataSource? = null
+
+    fun Database(hikari: HikariDataSource?) {
+        this.hikari = hikari
+    }
+
     private var hasBeenLoadedAlready = false
     companion object {
         lateinit var plugin: JavaPlugin
+        lateinit var jecon: Jecon
     }
 
     override fun onEnable() {
@@ -37,12 +49,35 @@ class VSCCore: JavaPlugin(), Listener {
         saveDefaultConfig()
 
         //DBへ接続
+        val hikariConfig = HikariConfig()
+        hikariConfig.jdbcUrl = String.format("jdbc:mariadb://%s/%s", config.getString("Database.host"), config.getString("Database.dbname"))
+        hikariConfig.username = config.getString("Database.user")
+        hikariConfig.password = config.getString("Database.password")
+        hikariConfig.isAutoCommit = true
+
+        if (config.getString("Database.type") == "MariaDB"){
+            
+        } else {
+            throw IllegalArgumentException("Unknown jdbc");
+        }
+
 
 
         //イベントリスナー継承
         regEvent(PlayerEventListener,this)
         //コマンドリスナー継承
         regCommand("vsc", VSCCommand)
+        regCommand("charl",VSCMoneyCommand)
+
+
+        val plugin = Bukkit.getPluginManager().getPlugin("Jecon")
+        if (plugin == null || !plugin.isEnabled) {
+            // not available
+            logger.warning("Jecon is not available.")
+        }else{
+            jecon = plugin as Jecon
+        }
+
 
         //　ここまで
         hasBeenLoadedAlready = true

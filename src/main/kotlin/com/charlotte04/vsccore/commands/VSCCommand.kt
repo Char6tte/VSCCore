@@ -15,7 +15,7 @@ import org.bukkit.scoreboard.Score
 
 object VSCCommand : CommandExecutor {
     //コンフィグ継承
-    private val config = VSCCore.plugin.config
+    val config = VSCCore.plugin.config
 
     //チュートリアルの通りに作ってみただけ。
     private fun setScoreBoard(player: Player) {
@@ -42,15 +42,16 @@ object VSCCommand : CommandExecutor {
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
-        sender.sendMessage("VSCCore")
         val player:Player = sender as Player
 
-
         setScoreBoard(player)
+        sender.sendMessage("VSCCore")
+
+        /*
         val path = VSCCore.plugin.config.getConfigurationSection("main_board")?.currentPath
 
         sender.sendMessage(path.toString())
-
+         */
 
         return true
     }

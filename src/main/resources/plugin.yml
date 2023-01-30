@@ -1,7 +1,13 @@
 name: VSCCore
 main: com.charlotte04.vsccore.VSCCore
-version: 0.0.1
+version: 1.0.1
 api-version: 1.19
+load: STARTUP
+loadbefore: [Vault, Jecon]
+softdepend: [Jecon]
 
 commands:
   vsc:
+    usage: ""
+  charl:
+    usage: ""

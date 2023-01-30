@@ -1,28 +1,31 @@
 package com.charlotte04.vsccore.listeners
 
-import com.charlotte04.vsccore.util.Massages.consoleMes
-import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.first_login
-import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.lifetime_login
+import com.charlotte04.vsccore.VSCCore
+import com.charlotte04.vsccore.commands.VSCCommand.config
 import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.local_login
+import com.charlotte04.vsccore.util.Massages.consoleMes
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextReplacementConfig
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.NamedTextColor.*
 import net.kyori.adventure.text.format.TextColor
-import org.bukkit.ChatColor.GREEN
+import org.bukkit.ChatColor.*
 import org.bukkit.Sound
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.inventory.ItemStack
+import java.util.*
 
 @Suppress("KotlinConstantConditions")
 object PlayerEventListener : Listener {
 
     object Msg {
         val local_login = Component.text("{name} さんがログインしました！").color(TextColor.color(NamedTextColor.GREEN))
-        val first_login = Component.text("はじめまして！これからよろしくね！").color(TextColor.color(AQUA))
-        val lifetime_login = Component.text("{n}日目のログインです！ログイン大ボーナスまであと{nd}日").color(TextColor.color(AQUA))
+        //val first_login = Component.text("はじめまして！これからよろしくね！").color(TextColor.color(NamedTextColor.AQUA))
+        //val lifetime_login = Component.text("{n}日目のログインです！ログイン大ボーナスまであと{nd}日").color(TextColor.color(NamedTextColor.AQUA))
     }
 
     fun sys_replace(match:String,replace:String): TextReplacementConfig {
@@ -34,17 +37,19 @@ object PlayerEventListener : Listener {
         val player = e.player
         val name= e.player.name
 
-        e.joinMessage(local_login.replaceText(sys_replace("{name}",name)).color(TextColor.color(AQUA)))
+        e.joinMessage(local_login.replaceText(sys_replace("{name}",name)).color(TextColor.color(NamedTextColor.AQUA)))
 
-
+        /*
         if(!player.hasPlayedBefore()){
             player.sendMessage(first_login)
         }else{
             player.sendMessage(lifetime_login.replaceText(sys_replace("{n}","")).replaceText(sys_replace("{nd}","")))
         }
 
+         */
+
         player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
-        player.sendMessage(Component.text())
+       // player.sendMessage(Component.text())
     }
 
     @EventHandler
@@ -69,6 +74,56 @@ object PlayerEventListener : Listener {
                 }
             }
 
+        }
+    }
+
+    @EventHandler
+    fun playerRightClickEvent(e: PlayerInteractEvent){
+        val player: Player = e.player
+        val uuid : UUID = player.uniqueId
+        val jecon = VSCCore.jecon.repository
+
+        val item: ItemStack = e.item ?: return
+
+        if (!item.hasItemMeta()) return
+        if ( e.action.isRightClick) {
+            //右クリック検知
+            if (!player.inventory.itemInMainHand.itemMeta.hasCustomModelData()){
+                consoleMes("アイテムにモデルデータが設定されていません",RED)
+                return
+            }
+            if (player.inventory.itemInMainHand.itemMeta.customModelData != 0) {
+                //player.inventory.itemInMainHand.type == Material.POISONOUS_POTATO
+                //カスタムモデルが設定されているアイテムを検知しました。
+                val cmNumber = player.inventory.itemInMainHand.itemMeta.customModelData
+                val itemType = player.inventory.itemInMainHand.type.name
+
+                val configPath = "items.id.$itemType.$cmNumber"
+
+                if (!config.contains("items.id.$itemType",false)) {
+                    consoleMes("該当のアイテム設定が見つかりません id:$itemType",RED)
+                    return
+                }else{
+                    consoleMes("該当のアイテム設定が見つかりました id:$itemType",RED)
+                }
+                if (!config.contains(configPath,false) ) {
+                    consoleMes("該当のカスタムデータが見つかりません id:$cmNumber",RED)
+                    return
+                }else{
+                    consoleMes("該当のカスタムデータがみつかりました id:$cmNumber",RED)
+                }
+                if (!config.contains("${configPath}.Money",false) ){
+                    consoleMes("お金が設定されていません。",RED)
+                    return
+                }else{
+                    val depositAmount =  config.getDouble("$configPath.Money")
+                    val itemName = config.getString("$configPath.name")
+                    jecon.deposit(uuid,depositAmount)
+                    player.sendMessage("$itemName ${AQUA}を使用しました。${GREEN} +${depositAmount}チャル${AQUA} 所持金：" + jecon.get(uuid))
+                }
+
+
+            }
         }
     }
 
