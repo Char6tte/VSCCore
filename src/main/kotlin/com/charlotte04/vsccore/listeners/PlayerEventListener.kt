@@ -9,10 +9,12 @@ import net.kyori.adventure.text.TextReplacementConfig
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.ChatColor.*
+import org.bukkit.Material.*
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
@@ -45,7 +47,6 @@ object PlayerEventListener : Listener {
         }else{
             player.sendMessage(lifetime_login.replaceText(sys_replace("{n}","")).replaceText(sys_replace("{nd}","")))
         }
-
          */
 
         player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
@@ -67,7 +68,7 @@ object PlayerEventListener : Listener {
                 return
             } catch (ex: Exception) {
                 if (isLastTry) {
-                    println("Caught exception while loading PlayerData.")
+                    println("PlayerDataの読み込み中に例外が発生しました。再接続してください。")
                     ex.printStackTrace()
                     e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Component.text(errorMessage))
                     return
@@ -89,7 +90,7 @@ object PlayerEventListener : Listener {
         if ( e.action.isRightClick) {
             //右クリック検知
             if (!player.inventory.itemInMainHand.itemMeta.hasCustomModelData()){
-                consoleMes("アイテムにモデルデータが設定されていません",RED)
+                //consoleMes("アイテムにモデルデータが設定されていません",RED)
                 return
             }
             if (player.inventory.itemInMainHand.itemMeta.customModelData != 0) {
@@ -103,28 +104,39 @@ object PlayerEventListener : Listener {
                 if (!config.contains("items.id.$itemType",false)) {
                     consoleMes("該当のアイテム設定が見つかりません id:$itemType",RED)
                     return
-                }else{
-                    consoleMes("該当のアイテム設定が見つかりました id:$itemType",RED)
                 }
                 if (!config.contains(configPath,false) ) {
                     consoleMes("該当のカスタムデータが見つかりません id:$cmNumber",RED)
                     return
-                }else{
-                    consoleMes("該当のカスタムデータがみつかりました id:$cmNumber",RED)
                 }
                 if (!config.contains("${configPath}.Money",false) ){
                     consoleMes("お金が設定されていません。",RED)
-                    return
                 }else{
                     val depositAmount =  config.getDouble("$configPath.Money")
                     val itemName = config.getString("$configPath.name")
                     jecon.deposit(uuid,depositAmount)
-                    player.sendMessage("$itemName ${AQUA}を使用しました。${GREEN} +${depositAmount}チャル${AQUA} 所持金：" + jecon.get(uuid))
+                    player.sendMessage("$itemName ${AQUA}を使用しました。${GREEN} +${depositAmount}チャル${AQUA} 所持金：" + jecon.get(uuid).toString() + "チャル")
                 }
-
-
             }
         }
     }
 
+
+    @EventHandler
+    fun blakeMoney(e: BlockDropItemEvent){
+        val jecon = VSCCore.jecon.repository
+        //ドロップした
+        val player = e.player
+        val random1 = (1..10).random()
+        val random2 = (1..10).random()
+        val chance = config.getInt("BlakeGetMoneyChance")
+        val depositAmount = (1..15).random() * 100
+        val uuid = player.uniqueId
+        //consoleMes("$random1, $random2",RED)
+        if (random1 % chance == 0 && random2 % chance == 0){
+            consoleMes("Hit! $random1 , $random2", GREEN)
+            player.sendMessage("${GREEN}[妖精]${AQUA}作業おつかれさま！！ほらどーぞ！ 所持金：${GOLD}+${depositAmount}チャル")
+            jecon.deposit(uuid,depositAmount.toDouble())
+            }
+        }
 }

@@ -24,6 +24,9 @@ object VSCMoneyCommand : CommandExecutor {
                    if(item.itemMeta.hasDisplayName()) {
                        itemName = item.itemMeta.displayName() as TextComponent
                    }
+
+
+
                    player.inventory.addItem(item)
                    sender.sendMessage(itemName.append(Component.text("を取得しました！").color(GREEN)))
                }

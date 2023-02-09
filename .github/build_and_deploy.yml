@@ -1,0 +1,49 @@
+name: Build and deploy
+
+on:
+  push:
+    branch:
+      - feature
+      - develop
+  pull_request:
+    branch:
+      - feature
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Make gradlew executable
+        run: |
+          chmod +x ./gradlew
+          ls
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+        # make sure that our plugin builds
+      - name: Build Project
+        run: ./gradlew build
+
+        # build the jars
+      - name: Build shadowJars
+        run: ./gradlew shadowJar
+
+      - name: Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            build/libs/*.jar

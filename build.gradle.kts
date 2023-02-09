@@ -68,5 +68,5 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<ShadowJar> {
-
+    archiveFileName.set("VSCCore.jar")
 }
