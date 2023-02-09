@@ -5,17 +5,8 @@ Database:
   user: "user"
   password: "password"
 
-vsc_command:
-  text1: ""
-  text2: ""
-  text3: ""
-
-board_setting:
-  Hours:
-    Format: ""
-  Boards_Toggle_Message:
-    ON: ""
-    OFF: ""
+#　１～１０で設定できます
+BlakeGetMoneyChance: 8
 
 custom_item_massage:
   id_NotFound: ""

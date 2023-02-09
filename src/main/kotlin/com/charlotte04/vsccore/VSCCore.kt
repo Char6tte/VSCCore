@@ -13,13 +13,12 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.event.Listener
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.UUID
 
 
 class VSCCore: JavaPlugin(), Listener {
     private var hikari: HikariDataSource? = null
 
-    fun Database(hikari: HikariDataSource?) {
+    fun database(hikari: HikariDataSource) {
         this.hikari = hikari
     }
 
@@ -55,12 +54,9 @@ class VSCCore: JavaPlugin(), Listener {
         hikariConfig.password = config.getString("Database.password")
         hikariConfig.isAutoCommit = true
 
-        if (config.getString("Database.type") == "MariaDB"){
-            
-        } else {
-            throw IllegalArgumentException("Unknown jdbc");
+        if (config.getString("Database.type") != "MariaDB"){
+            throw IllegalArgumentException("Unknown jdbc")
         }
-
 
 
         //イベントリスナー継承
@@ -77,7 +73,6 @@ class VSCCore: JavaPlugin(), Listener {
         }else{
             jecon = plugin as Jecon
         }
-
 
         //　ここまで
         hasBeenLoadedAlready = true
