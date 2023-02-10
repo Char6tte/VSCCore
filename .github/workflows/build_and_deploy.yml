@@ -4,15 +4,15 @@ on:
   push:
     branch:
       - develop
-  pull_request:
-    branch:
-      - develop
+    paths:
+      - "scr/**"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
       - uses: actions/checkout@v3
 
       - name: Set up JDK 17
@@ -25,6 +25,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ls
+
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
@@ -37,7 +38,7 @@ jobs:
         run: ./gradlew shadowJar
 
       - name: Release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
           automatic_release_tag: "latest"
