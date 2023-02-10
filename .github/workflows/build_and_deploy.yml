@@ -3,11 +3,9 @@ name: Build and deploy
 on:
   push:
     branch:
-      - feature
       - develop
   pull_request:
     branch:
-      - feature
       - develop
 
 jobs:
