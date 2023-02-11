@@ -27,6 +27,41 @@ items:
           - ""
         Money: 1000.0
 
+#左がドロップするアイテム名で、右側が最大報酬額
+WorkRewordsItems:
+  oak_wood: 1
+  birch_wood: 1
+  spruce_wood: 1
+  jungle_wood: 1
+  acacia_wood: 1
+  dark_wood: 1
+  netherrack: 1
+  glass_block: 1
+  dirt: 1
+  sand: 1
+  red_sand: 1
+  gravel: 1
+  clay: 1
+  sandstone: 1
+  end_stone: 2
+  cobblestone: 2
+  stone: 2
+  granite: 2
+  diorite: 2
+  andesite: 2
+  blackstone: 2
+  coal: 3
+  redstone: 3
+  glowstone_dust: 3
+  quartz: 3
+  lapis_lazuli: 3
+  raw_iron: 4
+  raw_gold: 4
+  raw_copper: 4
+  emerald: 5
+  diamond: 5
+  netherite_scrap: 5
+
 
 #
 #色の書き方：

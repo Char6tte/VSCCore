@@ -130,13 +130,19 @@ object PlayerEventListener : Listener {
         val random1 = (1..10).random()
         val random2 = (1..10).random()
         val chance = config.getInt("BlakeGetMoneyChance")
-        val depositAmount = (1..15).random() * 100
         val uuid = player.uniqueId
         //consoleMes("$random1, $random2",RED)
-        if (random1 % chance == 0 && random2 % chance == 0){
-            consoleMes("Hit! $random1 , $random2", GREEN)
-            player.sendMessage("${GREEN}[妖精]${AQUA}作業おつかれさま！！ほらどーぞ！ 所持金：${GOLD}+${depositAmount}チャル")
-            jecon.deposit(uuid,depositAmount.toDouble())
+        if (random1 % chance == 0 && random2 % chance == 0 && e.items.isNotEmpty()){
+            val blockName = e.items[0].name.lowercase(Locale.getDefault())
+            consoleMes("${player.name}:${blockName}Hit! $random1 , $random2", GREEN)
+            val path = "WorkRewordsItems.${blockName}"
+            if (config.contains(path, false)) {
+                val maxVal = config.getInt(path)
+                val depositAmount = (1..maxVal).random() * 100
+                consoleMes("${blockName}: Config Hit!", GREEN)
+                player.sendMessage("${GREEN}[妖精]${AQUA}作業おつかれさま！！ほらどーぞ！ 所持金：${GOLD}+${depositAmount}チャル")
+                jecon.deposit(uuid, depositAmount.toDouble())
+            }
             }
         }
 }
