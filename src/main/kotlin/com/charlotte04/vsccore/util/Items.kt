@@ -1,5 +1,7 @@
 package com.charlotte04.vsccore.util
 
+import com.charlotte04.vsccore.VSCCore.Companion.mm
+import com.charlotte04.vsccore.commands.VSCCommand.config
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor.*
 import org.bukkit.Material
@@ -7,20 +9,17 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 
 
-
-
 object Items  {
 
     fun money(type: String): Any {
         // お金用アイテム
         // ItemStack(Material.POISONOUS_POTATO)
-
         when (type) {
             "coin" -> {
                 val coin = ItemStack(Material.POISONOUS_POTATO)
                 val coinMeta: ItemMeta = coin.itemMeta
                 coinMeta.setCustomModelData(1)
-                coinMeta.displayName(Component.text("100チャコイン").color(GOLD))
+                coinMeta.displayName(mm.deserialize(config.getString("items.id.POISONOUS_POTATO.1.name").toString()))
                 coin.itemMeta = coinMeta
                 return coin
             }
@@ -33,12 +32,11 @@ object Items  {
                 return bill
             }
         }
-
         return false
     }
+    fun head(){
+        val head = ItemStack(Material.PLAYER_HEAD)
+        val headMeta: ItemMeta = head.itemMeta
 
-
-
-
-
+    }
 }

@@ -6,7 +6,7 @@ Database:
   password: "password"
 
 #　１～１０で設定できます
-BlakeGetMoneyChance: 8
+BlakeGetMoneyChance: 9
 
 custom_item_massage:
   id_NotFound: ""
@@ -15,26 +15,49 @@ items:
   id:
     POISONOUS_POTATO:
       1:
-        name: "100チャコイン"
+        name: "<color:gold>100チャコイン"
         Lore:
           - "右クリックで100チャゲットできる。"
           - ""
         Money: 100.0
       2:
-        name: "1000チャ紙幣"
+        name: "<color:yellow>1000チャ紙幣"
         Lore:
           - "右クリックで1000チャゲットできる。"
           - ""
         Money: 1000.0
 
+GUIs:
+  # example: ここにメニュー名を記入
+    # rows: <1~6> GUIの列数を記入
+    # title: 例の記入方法
+    # Items: これは定型文、ここから設置したいアイテムを入力
+      # '1': <- 何個目のアイテムか記入
+        # ItemType: ItemID　ﾀﾌﾞﾝ小文字でも対応可能
+        # name: <Itemの名前>　色々記入方法があるから後で書く
+        # lore:
+        # - nameの記入方法と一緒
+        # - -で改行？行を増やせる
+        # - ここは説明欄だよ
+        # price: 購入するときの価格
+        # X: 行
+        # Y: 列
+        # fill: 埋めたいときに記入する
+          # location: <Top,Bottom,Point> 埋める場所を入れる Top:一番上を埋める Bottom:一番下を埋める Point:指定した場所から指定した場所まで埋める
+          # rowfrom: <開始行>
+          # colfrom: <開始列>
+          # rowto: <終了行>
+          # colto: <終了列>
+
+
 #左がドロップするアイテム名で、右側が最大報酬額
 WorkRewordsItems:
-  oak_wood: 1
-  birch_wood: 1
-  spruce_wood: 1
-  jungle_wood: 1
-  acacia_wood: 1
-  dark_wood: 1
+  oak_log: 1
+  birch_log: 1
+  spruce_log: 1
+  jungle_log: 1
+  acacia_log: 1
+  dark_log: 1
   netherrack: 1
   glass_block: 1
   dirt: 1
@@ -61,22 +84,4 @@ WorkRewordsItems:
   emerald: 5
   diamond: 5
   netherite_scrap: 5
-
-
-#
-#色の書き方：
-#${AQUA}
-#
-
-main_board:
-  ui_Name: "1"
-  ui_Title: "ちゃるくら！"
-  content:
-    title:
-      - "== ちゃるくら！ =="
-      - ""
-    message:
-      - "a"
-      - "a"
-      - "a"
 

@@ -1,59 +1,68 @@
 package com.charlotte04.vsccore.commands
 
-import com.charlotte04.vsccore.VSCCore
-import net.kyori.adventure.text.Component
-import org.bukkit.Bukkit
-import org.bukkit.ChatColor.*
+import com.charlotte04.vsccore.VSCCore.Companion.guiList
+import com.charlotte04.vsccore.VSCCore.Companion.mm
+import com.charlotte04.vsccore.VSCCore.Companion.plugin
+import com.charlotte04.vsccore.util.ConfigItemList.setGuiItem
+import com.charlotte04.vsccore.util.ConfigItemList.setGuiList
+import com.charlotte04.vsccore.util.ConfigItemList.transactionGUI
+import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.scoreboard.Criteria.DUMMY
-import org.bukkit.scoreboard.DisplaySlot
-import org.bukkit.scoreboard.Score
+import org.bukkit.inventory.ItemStack
 
 
 object VSCCommand : CommandExecutor {
-    //コンフィグ継承
-    val config = VSCCore.plugin.config
-
+    //コンフィグ継
+    var config = plugin.config
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         val player:Player = sender as Player
-        sender.sendMessage("${player.name} なにもないよ！！")
+        if (!args.isNullOrEmpty()){
+            when(args[0]){
+                "reload" -> {
+                    sender.sendMessage(mm.deserialize("<color:red>Reload実行しました。"))
+                    plugin.reloadConfig()
+                    plugin.saveDefaultConfig()
+                    config = plugin.config
+                    config.options().copyDefaults(true)
+                    plugin.saveConfig()
 
+                    setGuiList()
+                }
+                "set" -> {
+                    setGuiList()
+                }
+                "list" -> {
+                    if (guiList.first.isNotEmpty()){
+                        sender.sendMessage(guiList.first.toString())
+                    }
+                }
+                "open" ->{
+                    if (args.size == 2){
+                        if (guiList.first.isEmpty()){
+                            sender.sendMessage(mm.deserialize("<color:red>GUI情報がありません。設定するか、ロードし直してください。"))
+                        }
+                        if (guiList.first.contains(args[1])){
+                            val idx = guiList.first.indexOf(args[1])
+                            val guiName = guiList.first[idx]
+                            sender.sendMessage(mm.deserialize("<color:green>[${guiName}]を開きました。"))
+                            setGuiItem(idx,player)
+                            guiList.second[idx].open(player)
+                        }
+                    }else{
+                        sender.sendMessage(mm.deserialize("<color:red>引数が足らないか、多いです。例 : /charl open <GuiName>"))
+                    }
+                }
+                "temp" ->{
+                    transactionGUI(player, ItemStack(Material.STONE_AXE),100.0,"AdminShop")
+                }
+                else ->{
+                    sender.sendMessage(mm.deserialize("<color:red>その引数は存在していません。"))
+                }
+            }
+        }
         return true
     }
-
-    //チュートリアルの通りに作ってみただけ。
-    private fun setScoreBoard(player: Player) {
-        val board = Bukkit.getScoreboardManager().newScoreboard
-        val obj = board.registerNewObjective(config.get("vsc_command").toString(), DUMMY, Component.text("${AQUA}=== ちゃるくら！ ==="))
-        obj.displaySlot = DisplaySlot.SIDEBAR
-
-        val onlineName: Score = obj.getScore("")
-        onlineName.score = 15
-
-        val onlineCounter = board.registerNewTeam("onlineCounter")
-
-        onlineCounter.addEntry("$BLACK" + WHITE)
-
-        if (Bukkit.getOnlinePlayers().isEmpty()) {
-            onlineCounter.prefix(Component.text("${GRAY}Online: "+"${DARK_RED}0${RED}/" + DARK_RED + Bukkit.getMaxPlayers()))
-        } else {
-            onlineCounter.prefix(Component.text("${GRAY}Online: "+"$DARK_RED" + Bukkit.getOnlinePlayers().size +"${RED}/" + DARK_RED + Bukkit.getMaxPlayers()))
-        }
-
-        obj.getScore("$BLACK" + WHITE).score = 14
-
-        player.scoreboard = board
-    }
-    /*
-    setScoreBoard(player)
-    sender.sendMessage("VSCCore")
-    val path = VSCCore.plugin.config.getConfigurationSection("main_board")?.currentPath
-
-    sender.sendMessage(path.toString())
-     */
-
-
 }

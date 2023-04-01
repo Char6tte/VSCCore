@@ -1,6 +1,7 @@
 package com.charlotte04.vsccore.listeners
 
 import com.charlotte04.vsccore.VSCCore
+import com.charlotte04.vsccore.VSCCore.Companion.mm
 import com.charlotte04.vsccore.commands.VSCCommand.config
 import com.charlotte04.vsccore.listeners.PlayerEventListener.Msg.local_login
 import com.charlotte04.vsccore.util.Massages.consoleMes
@@ -86,18 +87,18 @@ object PlayerEventListener : Listener {
 
         val item: ItemStack = e.item ?: return
 
-        if (!item.hasItemMeta()) return
+        if (!player.inventory.itemInMainHand.hasItemMeta()) return
         if ( e.action.isRightClick) {
             //右クリック検知
-            if (!player.inventory.itemInMainHand.itemMeta.hasCustomModelData()){
-                //consoleMes("アイテムにモデルデータが設定されていません",RED)
-                return
-            }
+            if (!player.inventory.itemInMainHand.itemMeta.hasCustomModelData()) return
             if (player.inventory.itemInMainHand.itemMeta.customModelData != 0) {
                 //player.inventory.itemInMainHand.type == Material.POISONOUS_POTATO
                 //カスタムモデルが設定されているアイテムを検知しました。
-                val cmNumber = player.inventory.itemInMainHand.itemMeta.customModelData
-                val itemType = player.inventory.itemInMainHand.type.name
+                val hand = player.inventory.itemInMainHand
+                val cmNumber = hand.itemMeta.customModelData
+                val itemType = hand.type.name
+                val disName = hand.displayName()
+
 
                 val configPath = "items.id.$itemType.$cmNumber"
 
@@ -108,6 +109,9 @@ object PlayerEventListener : Listener {
                 if (!config.contains(configPath,false) ) {
                     consoleMes("該当のカスタムデータが見つかりません id:$cmNumber",RED)
                     return
+                }
+                if (disName == mm.deserialize(config.getString("${configPath}.name").toString())){
+                    consoleMes("アイテム名一致",RED)
                 }
                 if (!config.contains("${configPath}.Money",false) ){
                     consoleMes("お金が設定されていません。",RED)

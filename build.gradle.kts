@@ -16,42 +16,55 @@ val mcVersion = "1.19.3"
 repositories {
     mavenCentral()
     maven {
+        //spigot
         url = URI("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     }
     maven{
+        //papermc
         url = URI("https://papermc.io/repo/repository/maven-public/")
     }
     maven{
-        url = URI("https://oss.sonatype.org/content/groups/public/")
-    }
-    maven{
-        url = URI("https://jitpack.io")
-    }
-    maven{
+        //jecon
         url = URI("https://himajyun.github.io/mvn-repo/")
     }
+    maven {
+        url = URI("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    }
+    maven {
+        //Placeholder
+        url = URI("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    }
+    maven {
+        //Vault
+        url = URI("https://jitpack.io")
+    }
+
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.22")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     // Align versions of all Kotlin components
-    //implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-
+    // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     // Kotlin
-    //implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.22")
-
+    // implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10")
     // PaperMC API
-    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
-
-    //Vault
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    // MiniMessage API
+    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    // Triumph GUI API
+    implementation("dev.triumphteam:triumph-gui:3.1.2")
+    // Vault API
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
+    // jecon API
     compileOnly("jp.jyn:Jecon:2.2.1")
-
+    // PlaceHolder API
+    compileOnly("me.clip:placeholderapi:2.11.2")
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation("mysql:mysql-connector-java:8.0.30")
-    //ORM hikariCP
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    // ORM hikariCP
+    //implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("club.minnced:discord-webhooks:0.8.2")
 }
 
 application{

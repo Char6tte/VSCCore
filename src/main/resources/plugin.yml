@@ -3,11 +3,12 @@ main: com.charlotte04.vsccore.VSCCore
 version: 1.0.1
 api-version: 1.19
 load: STARTUP
-loadbefore: [Vault, Jecon]
-softdepend: [Jecon]
+softdepend: [Jecon,PlaceholderAPI,Vault]
 
 commands:
-  vsc:
+  vs_money:
     usage: ""
   charl:
+    usage: ""
+  menu:
     usage: ""
