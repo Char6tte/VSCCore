@@ -1,6 +1,7 @@
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.7.10"
@@ -51,9 +52,9 @@ dependencies {
     // PaperMC API
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
     // MiniMessage API
-    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    implementation("net.kyori:adventure-text-minimessage:4.13.0")
     // Triumph GUI API
-    implementation("dev.triumphteam:triumph-gui:3.1.2")
+    implementation("dev.triumphteam:triumph-gui:3.1.4")
     // Vault API
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     // jecon API
@@ -61,9 +62,11 @@ dependencies {
     // PlaceHolder API
     compileOnly("me.clip:placeholderapi:2.11.2")
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-    implementation("mysql:mysql-connector-java:8.0.30")
+    implementation("mysql:mysql-connector-java:8.0.32")
+    // SQLite API
+    implementation("org.xerial:sqlite-jdbc:3.40.1.0")
     // ORM hikariCP
-    //implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("club.minnced:discord-webhooks:0.8.2")
 }
 

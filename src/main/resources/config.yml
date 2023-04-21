@@ -1,9 +1,10 @@
 Database:
-  type: "MariaDB"
-  host: "localhost:3306"
-  dbname: "charl_craft"
-  user: "user"
-  password: "password"
+  path: "core.sqlite"
+  type: "sqlite"
+  #host: "localhost:3306"
+  #dbname: "charl_craft"
+  #user: "user"
+  #password: "password"
 
 #　１～１０で設定できます
 BlakeGetMoneyChance: 9
